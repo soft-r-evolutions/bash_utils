@@ -2,24 +2,64 @@
 
 function log() {
     msg=$1
-    end_user=$2
-    if [ "${end_user}" == "end_user" ]; then
-        echo ${msg}
-    fi
+    log_type=$2
+
     local time_log=$(date "+%Y%m%d_%H:%M:%S,%3N")
-    echo "${time_log} ${msg}" >> ${log_file_name}
+    log_msg="${time_log} ${msg}"
+
+    if [ "${log_type}" == "end_user" ]; then
+        echo ${log_msg}
+    fi
+
+    echo ${log_msg} >> ${log_file_name}
 }
 
 function display_var() {
     var_name=$1
     var_value=$2
-    end_user=$3
-    msg="Set ${var_name} to: '${var_value}'"
-    log "${msg}" "${end_user}"
+    log_type=$3
+
+    if [ "${log_type}" != "no_log" ]; then
+        msg="Set ${var_name} to: '${var_value}'"
+    else
+        msg="Set ${var_name} to: '*********'"
+    fi
+    log "${msg}" "${log_type}"
+}
+
+function set_var() {
+    var_name=$1
+    var_value=$2
+    log_type=$3
+
+    export ${var_name}="${var_value}"
+    display_var ${var_name} "${var_value}" "${log_type}"
+}
+
+function run() {
+    cmd=$1
+    cmd_option=$2
+
+    if [ "${cmd_option}" != "no_log" ]; then
+        bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
+        result=${PIPESTATUS[0]}
+    else
+        bash -c "${cmd}" 2>&1
+        result=${PIPESTATUS[0]}
+    fi
+
+    if [ "${cmd_option}" != "no_exit" ]; then
+        if [ ${result} -ne 0 ]; then
+            end_script ${result}
+        fi
+    fi    
 }
 
 function _start_script() {
-    rm "${log_file_name}"
+    if [ "${is_log_append}" != "True" ]; then
+        rm "${log_file_name}"
+    fi
+
     log "-- Start script: ${script_name}" "end_user"
     display_var root_path "${root_path}"
     if [ "${is_default_output_path}" == "True" ]; then
@@ -65,6 +105,6 @@ function end_script() {
     if [ "$1" == 0 ]; then
         log "-- Script ${script_name} ended Successfully" "end_user"
     else
-        log "-- Script ${script_name} failed with status ${result}" "end_user"
+        log "-- Script ${script_name} FAILED with status ${result}" "end_user"
     fi
 }
