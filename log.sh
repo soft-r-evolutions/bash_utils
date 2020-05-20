@@ -58,7 +58,7 @@ function run() {
 }
 
 function _start_script() {
-    if [ "${is_log_append}" != "True" ]; then
+    if [ "${is_log_append}" != "True" ] && [ -f ${log_file_name} ]; then
         rm "${log_file_name}"
     fi
 
