@@ -37,14 +37,16 @@ function set_var() {
 }
 
 function run() {
-    cmd=$1
+    cmd=
     cmd_option=$2
 
-    if [ "${cmd_option}" != "no_log" ]; then
-        bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
+    if [ "${cmd_option}" == "no_log" ]; then
+        bash -c "${cmd}" 2>&1
         result=${PIPESTATUS[0]}
     else
-        bash -c "${cmd}" 2>&1
+        log "bash -c \"${cmd}\" 2>&1"
+        bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
+
         result=${PIPESTATUS[0]}
     fi
 
