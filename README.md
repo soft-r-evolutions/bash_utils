@@ -1,5 +1,7 @@
 # bash_utils
 
+![CI](https://github.com/soft-r-evolutions/bash_utils/workflows/CI/badge.svg)
+
 ## Object
 
 Utils for shell scripts. This allow your script to:
