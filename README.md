@@ -17,7 +17,7 @@ Source the log.sh script in your script.
 
 If the script is in the same script directory
 
------------
+```
 #!/bin/bash
 
 source log.sh
@@ -25,7 +25,7 @@ source log.sh
 start_script
 
 end_script 0
------------
+```
 
 ### Concept
 
