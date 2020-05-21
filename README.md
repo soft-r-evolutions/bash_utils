@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/soft-r-evolutions/bash_utils/workflows/CI/badge.svg)
 
-## Object
+## Goals 
 
 Utils for shell scripts. This allow your script to:
 
@@ -20,14 +20,15 @@ If the script is in the same script directory
 ```
 #!/bin/bash
 
-source log.sh
+W=$(dirname $(realpath $0))
+source ${W}/bash_utils.sh
 
 start_script
 
 end_script 0
 ```
 
-### Concept
+## Concepts
 
 A script must set special variables if needed and then call start_script.
 
@@ -44,7 +45,9 @@ will exit with the command errorcode except if "no_exit" is specified.
 To terminate the script use end_script with the exit code.
 
 
-### Special variables
+## Special variables
+
+Special variables must be set using export before calling start_script method.
 
 #### Append logs to previous one
 

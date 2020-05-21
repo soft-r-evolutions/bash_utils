@@ -37,17 +37,18 @@ function set_var() {
 }
 
 function run() {
-    cmd=
+    cmd=$1
     cmd_option=$2
 
     if [ "${cmd_option}" == "no_log" ]; then
         bash -c "${cmd}" 2>&1
         result=${PIPESTATUS[0]}
     else
-        log "bash -c \"${cmd}\" 2>&1"
+        log "------ Launch command: bash -c \"${cmd}\" 2>&1"
         bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
 
         result=${PIPESTATUS[0]}
+        log "Command has ended ------"
     fi
 
     if [ "${cmd_option}" != "no_exit" ]; then
@@ -104,9 +105,10 @@ function end_script() {
     result=$1
 
     log "-- Logs available at: ${log_file_name}" "end_user"
-    if [ "$1" == 0 ]; then
+    if [ "${result}" == 0 ]; then
         log "-- Script ${script_name} ended Successfully" "end_user"
     else
         log "-- Script ${script_name} FAILED with status ${result}" "end_user"
     fi
+    exit ${result}
 }
