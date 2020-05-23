@@ -8,7 +8,7 @@ Utils for shell scripts. This allow your script to:
 
 * Get a standard log format for all your scripts
 * Log important informations such as executed command and variables
-* Log script start and end with time stamp.
+* Log script start and end with time stamp
 * Integrate useful and basic features such as get absolute root script path...
 
 ## Basic usage
@@ -44,6 +44,40 @@ will exit with the command errorcode except if "no_exit" is specified.
 
 To terminate the script use end_script with the exit code.
 
+## Log types
+
+   Log types define where to display and write logs. This help:
+
+* to log at maximum as possible for debug.
+* to make a clean script output for customer.
+* to avoid logging sensitive data.
+
+There are 3 log types:
+
+* "" (default): will log in log_file_name and not on the standard output.
+* "end_user": will log in log_file_name and on the standard output (indication for end user).
+* "no_log": will not be written in log file (if you have to transfer log data to customers)
+
+
+## Start and Exit a script
+
+### Overview
+
+    Start and stop script offer the script to log properly when it starts and
+finish.
+
+    It ensures the logs are correctly set up.
+
+    Logging the script end offer to detect a hard reset because the script didn't
+log its end properly.
+
+
+    ** missing: silent and verbose options **
+
+
+### start_script Method
+
+This method enables loggin and set variables. Variables are written into log_file_name.
 
 ## Special variables
 
@@ -68,12 +102,6 @@ By default log are placed in a file named: **script_name.log**. You can specify
 a different log file name using **log_file_name** variable.
 
 The specified lof file name is **automatically created**.
-
-## Methods
-
-### start_script Method
-
-This method enables loggin and set variables. Variables are written into log_file_name.
 
 ### end_script
 
