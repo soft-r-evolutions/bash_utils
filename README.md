@@ -58,8 +58,50 @@ There are 3 log types:
 * "end_user": will log in log_file_name and on the standard output (indication for end user).
 * "no_log": will not be written in log file (if you have to transfer log data to customers)
 
+## Quick Overview
 
-## Start and Exit a script
+```
+#!/bin/bash
+
+function usage {
+    echo "Compare files between two directories" 
+    echo "compare_files.sh folder_1 folder_2"
+    echo "With:"
+    echo "folder_1 path to compare"
+    echo "folder_2 path to compare"
+}
+
+if [ "$#" -ne 2 ]; then
+    usage 1
+fi
+
+W=$(dirname $(realpath $0))
+source ${W}/bash_utils.sh
+
+export output_path='${W}/output'
+
+start_script
+
+set_var folder_1 "$1"
+set_var folder_2 "$2"
+
+log "List folder 1 entries to : ${origin_folder}" "end_user"
+
+set_var folder_1_entries "${output_path}/${folder_1}_entries.txt"
+set_var folder_2_entries "${output_path}/${folder_2}_entries.txt"
+run "ls -lR ${folder_1} > ${folder_1_entries}"
+run "ls -lR ${folder_2} > ${folder_2_entries}"
+
+run "diff ${folder_1_entries} ${folder_2_entries}"
+
+end_script 0
+```
+
+
+
+
+
+## Start and Exit a script Methods
 
 ### Overview
 
@@ -77,18 +119,24 @@ log its end properly.
 
 ### start_script Method
 
-This method enables loggin and set variables. Variables are written into log_file_name.
+    This method enables loggin and compute some default variables. Computed Variable are
+written into log_file_name:
 
-## Special variables
+* root_path: script root path
+* output_path: script output path where to put generated output such as log file or other
+files (default_value: root_path).
+* log_file_name: log file name to put debug traces.
+
+#### Special variables
 
 Special variables must be set using export before calling start_script method.
 
-#### Append logs to previous one
+##### Append logs to previous one
 
 By default previous log is erased. You can keep previous run log by
 set **is_log_append** to **"True"**.
 
-#### Define an output path
+##### Define an output path
 
 By default log are placed in the script folder. You can specify a different
 folder using **output_path** variable.
@@ -96,14 +144,31 @@ folder using **output_path** variable.
 The specified output path is **automatically created**. If one exist script
 **will write in it**.
 
-#### Define a log file name
+##### Define a log file name
 
 By default log are placed in a file named: **script_name.log**. You can specify
 a different log file name using **log_file_name** variable.
 
 The specified lof file name is **automatically created**.
 
-### end_script
+#### Example
+
+```
+#!/bin/bash
+
+W=$(dirname $(realpath $0))
+source ${W}/bash_utils.sh
+
+export is_log_append=True
+export output_path="${W}/output"
+export log_file_name="${output_path}/toto.log"
+
+start_script
+
+end_script 0
+```
+
+### end_script Method
 
 This method close script gracefully.
 
