@@ -169,6 +169,6 @@ end_script 0
 
 This method close script gracefully.
 
-    end_script parameter is the script exit code. **0 means no error occured** otherwise
+end_script parameter is the script exit code. **0 means no error occured** otherwise
 an error occured.
 
