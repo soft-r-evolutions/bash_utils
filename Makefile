@@ -1,6 +1,7 @@
 test: clean
 	tests/start_end_no_error_ut.sh
 	tests/start_end_error_ut.sh
+	./compare_folder.sh tests tests
 
 clean:
-	rm -f tests/*.log
+	rm -rf tests/*.log output
