@@ -46,7 +46,7 @@ To terminate the script use end_script with the exit code.
 
 ## Log types
 
-   Log types define where to display and write logs. This help:
+Log types define where to display and write logs. This help:
 
 * to log at maximum as possible for debug.
 * to make a clean script output for customer.
@@ -102,21 +102,19 @@ end_script 0
 
 ### Overview
 
-    Start and stop script offer the script to log properly when it starts and
+Start and stop script offer the script to log properly when it starts and
 finish.
 
-    It ensures the logs are correctly set up.
+It ensures the logs are correctly set up.
 
-    Logging the script end offer to detect a hard reset because the script didn't
+Logging the script end offer to detect a hard reset because the script didn't
 log its end properly.
 
-
-    ** missing: silent and verbose options **
-
+** Missing: silent and verbose options **
 
 ### start_script Method
 
-    This method enables loggin and compute some default variables. Computed Variable are
+This method enables loggin and compute some default variables. Computed Variable are
 written into log_file_name:
 
 * root_path: script root path
