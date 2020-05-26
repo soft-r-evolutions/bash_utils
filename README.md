@@ -98,9 +98,6 @@ end_script 0
 ```
 
 
-
-
-
 ## Start and Exit a script Methods
 
 ### Overview
@@ -171,4 +168,7 @@ end_script 0
 ### end_script Method
 
 This method close script gracefully.
+
+    end_script parameter is the script exit code. **0 means no error occured** otherwise
+an error occured.
 
