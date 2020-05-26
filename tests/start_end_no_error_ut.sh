@@ -5,24 +5,24 @@ source ${W}/../bash_utils.sh
 
 start_script
 
-log "Perform test on simple.sh" "end_user"
+log "Perform test on start_end_no_error.sh" "end_user"
 log "if a run fail the test will exit in error" "end_user"
 
-set_var output_file_name "${W}/simple_output.log"
-set_var simple_log_file_name "${W}/simple.log"
+set_var output_file_name "${W}/start_end_no_error_output.log"
+set_var start_end_no_error_log_file_name "${W}/start_end_no_error.log"
 
-log "Launch the script simple:" "end_user"
-run "${W}/simple.sh > ${output_file_name}"
+log "Launch the script start_end_no_error:" "end_user"
+run "${W}/start_end_no_error.sh > ${output_file_name}"
 log "Script successfully ended ... OK" "end_user"
-log "Dump simple log to test log"
-run "cat ${simple_log_file_name}"
+log "Dump start_end_no_error log to test log"
+run "cat ${start_end_no_error_log_file_name}"
 
 log "Check log file generation" "end_user"
-run "[ -f "${simple_log_file_name}" ]"
+run "[ -f "${start_end_no_error_log_file_name}" ]"
 log "Log file has been correctly generated ... OK" "end_user"
 
 log "Check log file content" "end_user"
-set_var number "$(cat "${simple_log_file_name}" | wc -l)"
+set_var number "$(cat "${start_end_no_error_log_file_name}" | wc -l)"
 run "[ ${number} -eq 8 ]"
 log "Log file contains the right number of lines ... OK" "end_user"
 
