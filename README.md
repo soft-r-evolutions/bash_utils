@@ -175,7 +175,7 @@ an error occured.
 This method log requested message according the log type policy. To put " character
 escape it \\".
 
-``
+```
 #!/bin/bash
 
 W=$(dirname $(realpath $0))
