@@ -170,3 +170,22 @@ This method close script gracefully.
 end_script parameter is the script exit code. **0 means no error occured** otherwise
 an error occured.
 
+### log Method
+
+This method log requested message according the log type policy. To put " character
+escape it \\".
+
+``
+#!/bin/bash
+
+W=$(dirname $(realpath $0))
+source ${W}/bash_utils.sh
+
+start_script
+
+log "I am an \"End User\" message display on the output" "end_user"
+log "I am an \"Standard\" message only written in log file to debug."
+
+end_script 0
+```
+
