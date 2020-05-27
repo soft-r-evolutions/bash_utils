@@ -175,6 +175,13 @@ an error occured.
 This method log requested message according the log type policy. To put " character
 escape it \\".
 
+Using log method log all script methods with a timestamp and the defined format.
+
+the second argument must be as following: "arg 2".
+
+Standard messages are log in log file for debug. End user message are displayed for
+end user.
+
 ```
 #!/bin/bash
 
@@ -189,3 +196,26 @@ log "I am an \"Standard\" message only written in log file to debug."
 end_script 0
 ```
 
+### set_var Method
+
+This method create or update a variable to the requested value. The variable and its new value
+is logged into the log file name. To put " character escape it as following \\".
+
+To hide a value in log you can set log_type parameter to "no_log".
+
+You can also set a command result to a variable using $()
+
+```
+#!/bin/bash
+
+W=$(dirname $(realpath $0))
+source ${W}/bash_utils.sh
+
+start_script
+
+set_var end_user_var "End User" "end_user"
+set_var no_log_var "No log" "no_log"
+set_var standard_var "$(echo \"Standard\")"
+
+end_script 0
+```
