@@ -1,7 +1,7 @@
 #!/bin/bash
 
 W=$(dirname $(realpath $0))
-source ${W}/bash_utils.sh
+source ${W}/../bash_utils.sh
 
 start_script
 
