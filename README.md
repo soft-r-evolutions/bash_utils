@@ -170,7 +170,7 @@ This method close script gracefully.
 end_script parameter is the script exit code. **0 means no error occured** otherwise
 an error occured.
 
-### log Method
+## log Method
 
 This method log requested message according the log type policy. To put " character
 escape it \\".
@@ -196,7 +196,7 @@ log "I am an \"Standard\" message only written in log file to debug."
 end_script 0
 ```
 
-### set_var Method
+## set_var Method
 
 This method create or update a variable to the requested value. The variable and its new value
 is logged into the log file name. To put " character escape it as following \\".
