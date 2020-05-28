@@ -8,8 +8,8 @@ start_script
 log "Perform test on run.sh" "end_user"
 log "if a run fail the test will exit in no error" "end_user"
 
-run output_file_name "${W}/run_output.log"
-run run_log_file_name "${W}/run.log"
+set_var output_file_name "${W}/run_output.log"
+set_var run_log_file_name "${W}/run.log"
 
 log "Launch the script run:" "end_user"
 run "${W}/run.sh > ${output_file_name}" "no_exit"

@@ -29,7 +29,7 @@ function log() {
     local time_log=$(date "+%Y%m%d_%H:%M:%S,%3N")
     log_msg="${time_log} ${msg}"
 
-    if [ "${log_type}" == "end_user" ]; then
+    if [[ "${log_type}" == *"end_user"* ]]; then
         echo ${log_msg}
     fi
 
@@ -62,22 +62,26 @@ function run() {
     cmd=$1
     cmd_option=$2
 
-    if [ "${cmd_option}" == "no_log" ]; then
-        bash -c "${cmd}" 2>&1
-        result=${PIPESTATUS[0]}
+    if [[ "${cmd_option}" == *"no_log"* ]]; then
+        log "------ Launch command: bash -c \"${cmd}\" 2>&1" "${cmd_option}"
     else
-        log "------ Launch command: bash -c \"${cmd}\" 2>&1"
-        bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
-
-        result=${PIPESTATUS[0]}
-        log "Command has ended ------"
+        log "------ Launch no_log command:"
     fi
 
-    if [ "${cmd_option}" != "no_exit" ]; then
+    if [[ "${cmd_option}" == *"display"* ]]; then
+        bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
+    else
+        bash -c "${cmd}" > ${log_file_name} 2>&1
+    fi
+
+    result=${PIPESTATUS[0]}
+    log "Command has ended ------"
+
+    if [[ "${cmd_option}" != *"no_exit"* ]]; then
         if [ ${result} -ne 0 ]; then
             end_script ${result}
         fi
-    fi    
+    fi
 }
 
 function _start_script() {

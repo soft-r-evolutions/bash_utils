@@ -56,7 +56,7 @@ There are 3 log types:
 
 * "" (default): will log in log_file_name and not on the standard output.
 * "end_user": will log in log_file_name and on the standard output (indication for end user).
-* "no_log": will not be written in log file (if you have to transfer log data to customers)
+* "no_log": will not be written in log file (if you have to transfer log data to customers).
 
 ## Quick Overview
 
@@ -226,8 +226,13 @@ This method run bash command and log stderr and stdout in log file output. The c
 is displayed in log file and can be replayed with a copy-paste. If no log is special the
 launched command is not logged.
 
-If the command failed it exit the script automatically with the proper exit_code except
-if "no_exit" parameter is specified.
+If the command failed it exit the script automatically with the proper exit_code.
+
+Parameters:
+
+* If "no_exit" parameter is specified same if the command failed the script won't exit.
+* If "display" parameter is specified the command output will be displayed in terminal.
+* If "no_log" parameter is specified the launch command will not appear in log.
 
 To put " character escape it as following \\".
 
