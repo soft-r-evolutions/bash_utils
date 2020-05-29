@@ -3,6 +3,8 @@
 # MIT License
 # 
 # Copyright (c) 2020 soft-r-evolutions
+# Project at: https://github.com/soft-r-evolutions/bash_utils
+# Version 1.0.0
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
