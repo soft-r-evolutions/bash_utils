@@ -16,13 +16,12 @@ run "${W}/run.sh > ${output_file_name}" "no_exit"
 run "cat ${run_log_file_name}"
 log "Script successfully ended ... OK" "end_user"
 
-# To adapt
+log "Check log files content for standard command" "end_user"
+run "! grep -q \"command standard\" ${output_file_name}"
+run "grep -q \"command standard\" ${run_log_file_name}"
+run "grep -q \"id|2|successfully\" ${run_log_file_name}"
+log "Standard command is Logged file and not displayed ... OK" "end_user"
 
-#log "Check log files content for end user mode" "end_user"
-#run "grep -q \"End User\" ${output_file_name}"
-#run "grep -q \"End User\" ${run_log_file_name}"
-#log "Log file and log output contains End user message ... OK" "end_user"
-#
 #log "Check log files content for default mode" "end_user"
 #run "grep -q \"Standard\" ${run_log_file_name}"
 #run "! grep -q \"Standard\" ${output_file_name}"
