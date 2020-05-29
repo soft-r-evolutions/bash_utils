@@ -58,30 +58,39 @@ function set_var() {
     display_var ${var_name} "${var_value}" "${log_type}"
 }
 
+export cmd_id=1
 function run() {
     cmd=$1
-    cmd_option=$2
+    cmd_options=$2
 
-    if [[ "${cmd_option}" == *"no_log"* ]]; then
-        log "------ Launch command: bash -c \"${cmd}\" 2>&1" "${cmd_option}"
+    [ -z ${cmd_options} ] && cmd_options="none"
+
+    if [[ "${cmd_options}" == *"no_log"* ]]; then
+        log "------ Launch not logged command (id:${cmd_id} - options: ${cmd_options}):"
     else
-        log "------ Launch no_log command:"
+        log "------ Launch command (id:${cmd_id} - options ${cmd_options}): ${cmd}" "${cmd_options}"
+        log "${cmd}" "${cmd_options}"
     fi
 
-    if [[ "${cmd_option}" == *"display"* ]]; then
+    if [[ "${cmd_options}" == *"display"* ]]; then
         bash -c "${cmd}" 2>&1 | tee -a ${log_file_name}
+        result=${PIPESTATUS[0]}
     else
-        bash -c "${cmd}" > ${log_file_name} 2>&1
+        bash -c "${cmd}" >> ${log_file_name} 2>&1
+        result=$?
     fi
 
-    result=${PIPESTATUS[0]}
-    log "Command has ended ------"
-
-    if [[ "${cmd_option}" != *"no_exit"* ]]; then
-        if [ ${result} -ne 0 ]; then
+    if [ ${result} -eq 0 ]; then
+        log "Command has successfully ended (id:${cmd_id})------"
+    else
+        if [[ "${cmd_options}" == *"no_exit"* ]]; then
+            log "Command(id:${cmd_id}) has failed ------ no exit specified"
+        else
+            log "Command(id:${cmd_id}) has failed ------ exiting..."
             end_script ${result}
         fi
     fi
+    ((cmd_id++))
 }
 
 function _start_script() {

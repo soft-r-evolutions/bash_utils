@@ -182,6 +182,8 @@ the second argument must be as following: "arg 2".
 Standard messages are log in log file for debug. End user message are displayed for
 end user.
 
+#### Example
+
 ```
 #!/bin/bash
 
@@ -204,6 +206,8 @@ is logged into the log file name. To put " character escape it as following \\".
 To hide a value in log you can set log_type parameter to "no_log".
 
 You can also set a command result to a variable using **$()**.
+
+#### Example
 
 ```
 #!/bin/bash
@@ -228,17 +232,17 @@ launched command is not logged.
 
 If the command failed it exit the script automatically with the proper exit_code.
 
-Parameters:
+Run options:
 
 * If "no_exit" parameter is specified same if the command failed the script won't exit.
 * If "display" parameter is specified the command output will be displayed in terminal.
 * If "no_log" parameter is specified the launch command will not appear in log.
 
+All options can be combined without any specific separator.
+
 To put " character escape it as following \\".
 
-To hide a value in log you can set log_type parameter to "no_log".
-
-To use complex command you can encapsulate it into its own shell using **bash -c**.
+#### Example
 
 ```
 #!/bin/bash
@@ -248,10 +252,12 @@ source ${W}/bash_utils.sh
 
 start_script
 
-run "false" "no_exit"
-run "true"
-run "bash -c \"msg='I am a complex command' echo ${msg} | grep command\""
-run "echo no_log" "no_log"
+run "echo \"command standard\" | grep command"
+run "echo \"no_exit_cmd\" && false" "no_exit"
+run "echo \"display_cmd\"" "display"
+run "echo no_log_cmd" "no_log"
+run "echo multiple_flags && false" "display,no_log,no_exit"
 
+unreachable code exit in error before
 end_script 0
 ```
