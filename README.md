@@ -56,7 +56,7 @@ There are 3 log types:
 
 * "" (default): will log in log_file_name and not on the standard output.
 * "end_user": will log in log_file_name and on the standard output (indication for end user).
-* "no_log": will not be written in log file (if you have to transfer log data to customers)
+* "no_log": will not be written in log file (if you have to transfer log data to customers).
 
 ## Quick Overview
 
@@ -170,7 +170,7 @@ This method close script gracefully.
 end_script parameter is the script exit code. **0 means no error occured** otherwise
 an error occured.
 
-### log Method
+## log Method
 
 This method log requested message according the log type policy. To put " character
 escape it \\".
@@ -181,6 +181,8 @@ the second argument must be as following: "arg 2".
 
 Standard messages are log in log file for debug. End user message are displayed for
 end user.
+
+#### Example
 
 ```
 #!/bin/bash
@@ -196,14 +198,16 @@ log "I am an \"Standard\" message only written in log file to debug."
 end_script 0
 ```
 
-### set_var Method
+## set_var Method
 
 This method create or update a variable to the requested value. The variable and its new value
 is logged into the log file name. To put " character escape it as following \\".
 
 To hide a value in log you can set log_type parameter to "no_log".
 
-You can also set a command result to a variable using $()
+You can also set a command result to a variable using **$()**.
+
+#### Example
 
 ```
 #!/bin/bash
@@ -217,5 +221,43 @@ set_var end_user_var "End User" "end_user"
 set_var no_log_var "No log" "no_log"
 set_var standard_var "$(echo \"Standard\")"
 
+end_script 0
+```
+
+## run Method
+
+This method run bash command and log stderr and stdout in log file output. The command
+is displayed in log file and can be replayed with a copy-paste. If no log is special the
+launched command is not logged.
+
+If the command failed it exit the script automatically with the proper exit_code.
+
+Run options:
+
+* If "no_exit" parameter is specified same if the command failed the script won't exit.
+* If "display" parameter is specified the command output will be displayed in terminal.
+* If "no_log" parameter is specified the launch command will not appear in log.
+
+All options can be combined without any specific separator.
+
+To put " character escape it as following \\".
+
+#### Example
+
+```
+#!/bin/bash
+
+W=$(dirname $(realpath $0))
+source ${W}/bash_utils.sh
+
+start_script
+
+run "echo \"command standard\" | grep command"
+run "echo \"no_exit_cmd\" && false" "no_exit"
+run "echo \"display_cmd\"" "display"
+run "echo no_log_cmd" "no_log"
+run "echo multiple_flags && false" "display,no_log,no_exit"
+
+unreachable code exit in error before
 end_script 0
 ```

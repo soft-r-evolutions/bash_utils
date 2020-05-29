@@ -33,7 +33,7 @@ log "Output content contains the right number of lines ... OK" "end_user"
 
 log "Check test log file content to see if cat is present in it correctly" "end_user"
 set_var number "$(cat "${log_file_name}" | wc -l)"
-run "[ ${number} -eq 40 ]"
+run "[ ${number} -eq 45 ]"
 log "Log file content contains the right number of lines ... OK" "end_user"
 
 end_script 0
