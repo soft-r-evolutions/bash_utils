@@ -63,8 +63,6 @@ function run() {
     cmd=$1
     cmd_options=$2
 
-    [ -z ${cmd_options} ] && cmd_options="none"
-
     if [[ "${cmd_options}" == *"no_log"* ]]; then
         log "------ Launch not logged command (id:${cmd_id} - options: ${cmd_options}):"
     else
